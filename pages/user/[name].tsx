@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
-const UserName: NextPage = ({ data }) => {
+const UserName: NextPage<{data: string}> = ({ data }) => {
   return (
     <Container maxWidth="lg">
       <Box
