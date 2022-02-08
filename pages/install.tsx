@@ -6,6 +6,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
 
 const steps = ['数据库连接设置', '管理员账号设置'];
 
@@ -19,7 +20,29 @@ export default function HorizontalLinearStepper() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
+  let installForm;
+  if(activeStep === 0) {
+    installForm = (
+      <TextField
+          required
+          id="outlined-required"
+          label="Required"
+          defaultValue="Hello World"
+        />
+    )
+  } else if (activeStep === 1) {
+    installForm = (
+      <Box sx={{ width: '100%', my: 1 }}>
+        <TextField
+          sx={{my: 4}}
+          required
+          id="outlined-required"
+          label="Required"
+          defaultValue="Hello World2122222"
+        />
+      </Box>
+    )
+  }
 
   return (
     <Container maxWidth="lg">
@@ -41,7 +64,7 @@ export default function HorizontalLinearStepper() {
         {activeStep === steps.length ? (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
+              安装完成
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Box sx={{ flex: '1 1 auto' }} />
@@ -50,6 +73,7 @@ export default function HorizontalLinearStepper() {
           </React.Fragment>
         ) : (
           <React.Fragment>
+            {installForm}
             <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button
