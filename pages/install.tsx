@@ -23,23 +23,19 @@ export default function HorizontalLinearStepper() {
   let installForm;
   if(activeStep === 0) {
     installForm = (
-      <TextField
+      <Box sx={{ width: '100%', my: 1 }}>
+        <TextField
           required
           id="outlined-required"
           label="Required"
           defaultValue="Hello World"
         />
+      </Box>
     )
   } else if (activeStep === 1) {
     installForm = (
       <Box sx={{ width: '100%', my: 1 }}>
-        <TextField
-          sx={{my: 4}}
-          required
-          id="outlined-required"
-          label="Required"
-          defaultValue="Hello World2122222"
-        />
+        fdasfdasf
       </Box>
     )
   }
