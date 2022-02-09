@@ -6,14 +6,8 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InstallDbForm from '../components/InstallDbForm';
+import InstallAdminForm from '../components/InstallAdminForm';
 
 const steps = ['数据库连接设置', '管理员账号设置'];
 
@@ -28,82 +22,11 @@ export default function HorizontalLinearStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const [showDbPassword, setShowDbPassword] = React.useState(false)
-  const [showAdminPassword, setShowAdminPassword] = React.useState(false)
-  const handleClickShowPassword = () => {
-    setShowDbPassword(!showDbPassword);
-  };
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
   let installForm;
   if(activeStep === 0) {
-    installForm = (
-      <Box sx={{ width: '100%', my: 2 }}>
-        <FormControl fullWidth sx={{ m: 1 }}>
-          <InputLabel htmlFor="db-host">数据库地址</InputLabel>
-          <OutlinedInput
-            id="db-host"
-            label="数据库地址"
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }}>
-          <InputLabel htmlFor="db-user">数据库用户名</InputLabel>
-          <OutlinedInput
-            id="db-user"
-            label="数据库用户名"
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }}>
-          <InputLabel htmlFor="db-pass">数据库密码</InputLabel>
-          <OutlinedInput
-            id="db-pass"
-            label="数据库密码"
-            type={showDbPassword ? 'text' : 'password'}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showDbPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }}>
-          <InputLabel htmlFor="db-pass">数据库名称</InputLabel>
-          <OutlinedInput
-            id="db-database"
-            label="数据库名称"
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }}>
-          <InputLabel htmlFor="db-pass">数据库表前缀</InputLabel>
-          <OutlinedInput
-            id="db-tablename-prefix"
-            label="数据库表前缀"
-          />
-        </FormControl>
-      </Box>
-    )
+    installForm = (<InstallDbForm />)
   } else if (activeStep === 1) {
-    installForm = (
-      <Box sx={{ width: '100%', my: 2 }}>
-        <TextField
-          required
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-        />
-      </Box>
-    )
+    installForm = (<InstallAdminForm />)
   }
 
   return (
