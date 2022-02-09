@@ -35,7 +35,6 @@ export default function HorizontalLinearStepper() {
 
   const handleInstallStateChange =
     (prop: keyof InstallState, value: string) => {
-      console.log(prop, value)
       setInstallValues({ ...installValues, [prop]: value });
     };
 

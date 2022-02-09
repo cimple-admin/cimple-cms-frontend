@@ -26,12 +26,10 @@ export default function InstallDbForm(props: Props) {
 
   const handleDataChange  =
   (prop: keyof InstallState) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
     props.updateValue(prop, event.target.value);
   };
   return (
     <Box sx={{ width: '100%', my: 2 }}>
-      {props.installValues.dbHost}
       <FormControl fullWidth sx={{ m: 1 }}>
         <InputLabel htmlFor="db-host">数据库地址</InputLabel>
         <OutlinedInput
