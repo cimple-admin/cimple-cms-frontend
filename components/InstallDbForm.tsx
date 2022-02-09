@@ -7,8 +7,14 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { InstallState } from '../pages/install';
 
-export default function InstallDbForm() {
+interface Props {
+  updateValue: (prop: keyof InstallState, value: string) => void;
+  installValues: InstallState;
+}
+
+export default function InstallDbForm(props: Props) {
   const [showDbPassword, setShowDbPassword] = React.useState(false)
   const handleClickShowDbPassword = () => {
     setShowDbPassword(!showDbPassword);
@@ -18,13 +24,21 @@ export default function InstallDbForm() {
     event.preventDefault();
   };
 
+  const handleDataChange  =
+  (prop: keyof InstallState) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+    props.updateValue(prop, event.target.value);
+  };
   return (
     <Box sx={{ width: '100%', my: 2 }}>
+      {props.installValues.dbHost}
       <FormControl fullWidth sx={{ m: 1 }}>
         <InputLabel htmlFor="db-host">数据库地址</InputLabel>
         <OutlinedInput
           id="db-host"
           label="数据库地址"
+          value={props.installValues.dbHost}
+          onChange={handleDataChange('dbHost')}
         />
       </FormControl>
       <FormControl fullWidth sx={{ m: 1 }}>
@@ -55,14 +69,14 @@ export default function InstallDbForm() {
         />
       </FormControl>
       <FormControl fullWidth sx={{ m: 1 }}>
-        <InputLabel htmlFor="db-pass">数据库名称</InputLabel>
+        <InputLabel htmlFor="db-database">数据库名称</InputLabel>
         <OutlinedInput
           id="db-database"
           label="数据库名称"
         />
       </FormControl>
       <FormControl fullWidth sx={{ m: 1 }}>
-        <InputLabel htmlFor="db-pass">数据库表前缀</InputLabel>
+        <InputLabel htmlFor="db-tablename-prefix">数据库表前缀</InputLabel>
         <OutlinedInput
           id="db-tablename-prefix"
           label="数据库表前缀"

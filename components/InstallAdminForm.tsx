@@ -48,6 +48,26 @@ export default function InstallDbForm() {
             }
           />
         </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <InputLabel htmlFor="admin-repass">重复密码</InputLabel>
+          <OutlinedInput
+            id="admin-repass"
+            label="重复密码"
+            type={showAdminPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowAdminPassword}
+                  onMouseDown={handleMouseDownAdminPassword}
+                  edge="end"
+                >
+                  {showAdminPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
       </Box>
   )
 }

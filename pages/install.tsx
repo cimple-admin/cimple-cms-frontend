@@ -11,9 +11,33 @@ import InstallAdminForm from '../components/InstallAdminForm';
 import Head from 'next/head'
 
 const steps = ['数据库连接设置', '管理员账号设置'];
+export interface InstallState {
+  dbHost: string;
+  dbUser: string;
+  dbPass: string;
+  dbDatabase: string;
+  dbTablenamePrefix: string;
+  adminUser: string;
+  adminPass: string;
+}
 
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [installValues, setInstallValues] = React.useState<InstallState>({
+    dbHost: 'fdsafas',
+    dbUser: '',
+    dbPass: '',
+    dbDatabase: '',
+    dbTablenamePrefix: '',
+    adminUser: '',
+    adminPass: '',
+  });
+
+  const handleInstallStateChange =
+    (prop: keyof InstallState, value: string) => {
+      console.log(prop, value)
+      setInstallValues({ ...installValues, [prop]: value });
+    };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -25,7 +49,7 @@ export default function HorizontalLinearStepper() {
 
   let installForm;
   if (activeStep === 0) {
-    installForm = (<InstallDbForm />)
+    installForm = (<InstallDbForm updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues} />)
   } else if (activeStep === 1) {
     installForm = (<InstallAdminForm />)
   }
@@ -58,7 +82,7 @@ export default function HorizontalLinearStepper() {
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Box sx={{ flex: '1 1 auto' }} />
-                <Button >进入系统</Button>
+                <Button onClick={() => {console.log(installValues)}} >进入系统</Button>
               </Box>
             </React.Fragment>
           ) : (
