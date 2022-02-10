@@ -9,18 +9,9 @@ import Container from '@mui/material/Container';
 import InstallDbForm from '../src/components/InstallDbForm';
 import InstallAdminForm from '../src/components/InstallAdminForm';
 import Head from 'next/head'
+import { InstallState } from '../src/interface/install';
 
 const steps = ['数据库连接设置', '管理员账号设置'];
-export interface InstallState {
-  dbHost: string;
-  dbUser: string;
-  dbPass: string;
-  dbDatabase: string;
-  dbTablenamePrefix: string;
-  adminUser: string;
-  adminPass: string;
-  adminRepass: string;
-}
 
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -41,9 +32,11 @@ export default function HorizontalLinearStepper() {
     };
 
   const handleNext = () => {
-    console.log(activeStep)
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    console.log(activeStep)
+    if(activeStep === steps.length - 1) {
+      // 此时需要调用 api 执行配置的写入
+      console.log('aaaaaaaaa');
+    }
   };
 
   const handleBack = () => {

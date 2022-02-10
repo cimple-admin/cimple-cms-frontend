@@ -7,8 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { InstallState } from '../../pages/install';
-import { InstallProps } from '../interface/install';
+import { InstallProps, InstallState } from '../interface/install';
 
 export default function InstallDbForm(props: InstallProps) {
   const [showAdminPassword, setShowAdminPassword] = React.useState(false)
