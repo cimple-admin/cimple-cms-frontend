@@ -7,8 +7,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { InstallState } from '../../pages/install';
+import { InstallProps } from '../interface/install';
 
-export default function InstallDbForm() {
+export default function InstallDbForm(props: InstallProps) {
   const [showAdminPassword, setShowAdminPassword] = React.useState(false)
 
   const handleClickShowAdminPassword = () => {
@@ -19,6 +21,11 @@ export default function InstallDbForm() {
     event.preventDefault();
   };
 
+  const handleDataChange  =
+  (prop: keyof InstallState) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.updateValue(prop, event.target.value);
+  };
+
   return (
     <Box sx={{ width: '100%', my: 2 }}>
         <FormControl fullWidth sx={{ m: 1 }}>
@@ -26,6 +33,8 @@ export default function InstallDbForm() {
           <OutlinedInput
             id="admin-user"
             label="管理员用户名"
+            value={props.installValues.adminUser}
+            onChange={handleDataChange('adminUser')}
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }}>
@@ -34,6 +43,8 @@ export default function InstallDbForm() {
             id="admin-pass"
             label="管理员密码"
             type={showAdminPassword ? 'text' : 'password'}
+            value={props.installValues.adminPass}
+            onChange={handleDataChange('adminPass')}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -54,6 +65,8 @@ export default function InstallDbForm() {
             id="admin-repass"
             label="重复密码"
             type={showAdminPassword ? 'text' : 'password'}
+            value={props.installValues.adminRepass}
+            onChange={handleDataChange('adminRepass')}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

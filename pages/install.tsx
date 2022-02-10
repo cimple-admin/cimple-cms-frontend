@@ -6,8 +6,8 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import InstallDbForm from '../components/InstallDbForm';
-import InstallAdminForm from '../components/InstallAdminForm';
+import InstallDbForm from '../src/components/InstallDbForm';
+import InstallAdminForm from '../src/components/InstallAdminForm';
 import Head from 'next/head'
 
 const steps = ['数据库连接设置', '管理员账号设置'];
@@ -19,6 +19,7 @@ export interface InstallState {
   dbTablenamePrefix: string;
   adminUser: string;
   adminPass: string;
+  adminRepass: string;
 }
 
 export default function HorizontalLinearStepper() {
@@ -31,6 +32,7 @@ export default function HorizontalLinearStepper() {
     dbTablenamePrefix: '',
     adminUser: '',
     adminPass: '',
+    adminRepass: '',
   });
 
   const handleInstallStateChange =
@@ -39,7 +41,9 @@ export default function HorizontalLinearStepper() {
     };
 
   const handleNext = () => {
+    console.log(activeStep)
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    console.log(activeStep)
   };
 
   const handleBack = () => {
@@ -50,7 +54,7 @@ export default function HorizontalLinearStepper() {
   if (activeStep === 0) {
     installForm = (<InstallDbForm updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues} />)
   } else if (activeStep === 1) {
-    installForm = (<InstallAdminForm />)
+    installForm = (<InstallAdminForm  updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues}  />)
   }
 
   return (

@@ -7,14 +7,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { InstallState } from '../pages/install';
+import { InstallState } from '../../pages/install';
+import { InstallProps } from '../interface/install';
 
-interface Props {
-  updateValue: (prop: keyof InstallState, value: string) => void;
-  installValues: InstallState;
-}
-
-export default function InstallDbForm(props: Props) {
+export default function InstallDbForm(props: InstallProps) {
   const [showDbPassword, setShowDbPassword] = React.useState(false)
   const handleClickShowDbPassword = () => {
     setShowDbPassword(!showDbPassword);
@@ -44,6 +40,8 @@ export default function InstallDbForm(props: Props) {
         <OutlinedInput
           id="db-user"
           label="数据库用户名"
+          value={props.installValues.dbUser}
+          onChange={handleDataChange('dbUser')}
         />
       </FormControl>
       <FormControl fullWidth sx={{ m: 1 }}>
@@ -52,6 +50,8 @@ export default function InstallDbForm(props: Props) {
           id="db-pass"
           label="数据库密码"
           type={showDbPassword ? 'text' : 'password'}
+          value={props.installValues.dbPass}
+          onChange={handleDataChange('dbPass')}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -71,6 +71,8 @@ export default function InstallDbForm(props: Props) {
         <OutlinedInput
           id="db-database"
           label="数据库名称"
+          value={props.installValues.dbDatabase}
+          onChange={handleDataChange('dbDatabase')}
         />
       </FormControl>
       <FormControl fullWidth sx={{ m: 1 }}>
@@ -78,6 +80,8 @@ export default function InstallDbForm(props: Props) {
         <OutlinedInput
           id="db-tablename-prefix"
           label="数据库表前缀"
+          value={props.installValues.dbTablenamePrefix}
+          onChange={handleDataChange('dbTablenamePrefix')}
         />
       </FormControl>
     </Box>
