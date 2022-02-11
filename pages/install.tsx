@@ -32,10 +32,11 @@ export default function HorizontalLinearStepper() {
     };
 
   const handleNext = () => {
+    refContainer.current();
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     if(activeStep === steps.length - 1) {
       // 此时需要调用 api 执行配置的写入
-      console.log('aaaaaaaaa');
+      console.log('need call api write config file.');
     }
   };
 
@@ -43,11 +44,13 @@ export default function HorizontalLinearStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const refContainer = React.useRef(null);
+
   let installForm;
   if (activeStep === 0) {
-    installForm = (<InstallDbForm updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues} />)
+    installForm = (<InstallDbForm submit={refContainer} updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues} />)
   } else if (activeStep === 1) {
-    installForm = (<InstallAdminForm  updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues}  />)
+    installForm = (<InstallAdminForm submit={refContainer} updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues}  />)
   }
 
   return (

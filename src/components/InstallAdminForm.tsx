@@ -10,6 +10,11 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { InstallProps, InstallState } from '../interface/install';
 
 export default function InstallDbForm(props: InstallProps) {
+  React.useEffect(() => {
+    props.submit.current = () => {
+      console.log('bbbbbbbb');
+    }
+  })
   const [showAdminPassword, setShowAdminPassword] = React.useState(false)
 
   const handleClickShowAdminPassword = () => {
