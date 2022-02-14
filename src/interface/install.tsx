@@ -16,5 +16,4 @@ export interface InstallState {
   dbTablenamePrefix: string;
   adminUser: string;
   adminPass: string;
-  adminRepass: string;
 }

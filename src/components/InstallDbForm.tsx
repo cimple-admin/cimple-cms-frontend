@@ -2,12 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { InstallProps, InstallState } from '../interface/install';
+import { InstallProps } from '../interface/install';
 import { object, string, InferType } from 'yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,7 +21,7 @@ const validationSchema = object({
   dbTablenamePrefix: string().required("请输入数据库表名前缀"),
 })
 
-interface installDbFormFields extends InferType<typeof validationSchema> { }
+interface installDbFormFields extends InferType<typeof validationSchema> {}
 
 export default function InstallDbForm(props: InstallProps) {
   // 是否验证通过的标识
@@ -46,7 +45,7 @@ export default function InstallDbForm(props: InstallProps) {
   const handleMouseDownDbPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-
+  // 表单验证部分
   const { register, control, handleSubmit, formState: { errors } } = useForm<installDbFormFields>({
     resolver: yupResolver(validationSchema),
   });
@@ -77,7 +76,6 @@ export default function InstallDbForm(props: InstallProps) {
         <Input
           id="db-pass"
           type={showDbPassword ? 'text' : 'password'}
-          defaultValue={props.installValues.dbPass}
           endAdornment={
             <InputAdornment position="end">
               <IconButton

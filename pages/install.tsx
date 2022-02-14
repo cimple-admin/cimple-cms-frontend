@@ -18,12 +18,11 @@ export default function HorizontalLinearStepper() {
   const [installValues, setInstallValues] = React.useState<InstallState>({
     dbHost: 'dbhost',
     dbUser: 'dbuser',
-    dbPass: 'dbpass',
+    dbPass: '',
     dbDatabase: 'dbDatabase',
     dbTablenamePrefix: 'dbTablenamePrefix',
     adminUser: '',
     adminPass: '',
-    adminRepass: '',
   });
 
   const handleNext = async () => {
@@ -32,12 +31,16 @@ export default function HorizontalLinearStepper() {
     if (formValiteRes) {
       setInstallValues({ ...installValues, ...formValiteRes });
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      if (activeStep === steps.length - 1) {
-        // 此时需要调用 api 执行配置的写入
-        console.log('need call api write config file.');
-      }
     }
   };
+  React.useEffect(() => {
+    console.log(activeStep)
+    if (activeStep === steps.length) {
+      // 此时需要调用 api 执行配置的写入
+      console.log('need call api write config file.');
+      console.log(installValues)
+    }
+  })
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -82,7 +85,7 @@ export default function HorizontalLinearStepper() {
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={() => { console.log(installValues) }} >进入系统</Button>
+                <Button onClick={() => { console.log("go to system home page") }} >进入系统</Button>
               </Box>
             </React.Fragment>
           ) : (
