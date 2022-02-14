@@ -31,13 +31,16 @@ export default function HorizontalLinearStepper() {
       setInstallValues({ ...installValues, [prop]: value });
     };
 
-  const handleNext = () => {
-    refContainer.current.validate();
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if(activeStep === steps.length - 1) {
-      // 此时需要调用 api 执行配置的写入
-      console.log('need call api write config file.');
+  const handleNext = async () => {
+    let formValiteRes = await refContainer.current.validate();
+    if (formValiteRes) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      if (activeStep === steps.length - 1) {
+        // 此时需要调用 api 执行配置的写入
+        console.log('need call api write config file.');
+      }
     }
+
   };
 
   const handleBack = () => {
@@ -45,14 +48,14 @@ export default function HorizontalLinearStepper() {
   };
 
   const refContainer = React.useRef<InstallFormSubmit>({
-    validate: () => {return ""},
+    validate: async () => { return "" },
   });
 
   let installForm;
   if (activeStep === 0) {
-    installForm = (<InstallDbForm submit={refContainer} updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues} />)
+    installForm = (<InstallDbForm submit={refContainer} updateValue={(prop: keyof InstallState, value: string) => { handleInstallStateChange(prop, value) }} installValues={installValues} />)
   } else if (activeStep === 1) {
-    installForm = (<InstallAdminForm submit={refContainer} updateValue={(prop: keyof InstallState, value: string) => {handleInstallStateChange(prop, value)}} installValues={installValues}  />)
+    installForm = (<InstallAdminForm submit={refContainer} updateValue={(prop: keyof InstallState, value: string) => { handleInstallStateChange(prop, value) }} installValues={installValues} />)
   }
 
   return (
@@ -83,7 +86,7 @@ export default function HorizontalLinearStepper() {
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={() => {console.log(installValues)}} >进入系统</Button>
+                <Button onClick={() => { console.log(installValues) }} >进入系统</Button>
               </Box>
             </React.Fragment>
           ) : (

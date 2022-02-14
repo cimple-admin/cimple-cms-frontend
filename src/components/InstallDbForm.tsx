@@ -19,13 +19,13 @@ const validationSchema = object({
 })
 
 export default function InstallDbForm(props: InstallProps) {
+  let validatePass = false;
   // 对外暴露的方法
   React.useEffect(() => {
-    props.submit.current.validate = () => {
-      console.log('aaaaaaaa1');
-      handleSubmit(onSubmit);
-      console.log('aaaaaaaa2');
-      return "abc";
+    props.submit.current.validate = async () => {
+      await handleSubmit(onSubmit)();
+      console.log('aaaaaaaa1', validatePass);
+      return validatePass;
     }
   })
   // 显示隐藏密码的操作
@@ -49,6 +49,8 @@ export default function InstallDbForm(props: InstallProps) {
   const onSubmit = (data: any) => {
     console.log('onSubmit', data);
     console.log(JSON.stringify(data, null, 2));
+    validatePass = true;
+    return "abcd";
   };
 
   return (
@@ -108,13 +110,6 @@ export default function InstallDbForm(props: InstallProps) {
           onChange={handleDataChange('dbTablenamePrefix')}
         />
       </FormControl>
-      <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit(onSubmit)}
-            >
-              Register
-            </Button>
     </Box>
   )
 }

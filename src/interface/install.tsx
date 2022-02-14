@@ -7,7 +7,7 @@ export interface InstallProps {
 }
 
 export interface InstallFormSubmit {
-  validate: () => string;
+  validate: () => Promise<boolean>;
 }
 export interface InstallState {
   dbHost: string;
