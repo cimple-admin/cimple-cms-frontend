@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import InstallDbForm from '../src/components/InstallDbForm';
 import InstallAdminForm from '../src/components/InstallAdminForm';
 import Head from 'next/head'
-import { InstallState } from '../src/interface/install';
+import { InstallFormSubmit, InstallState } from '../src/interface/install';
 
 const steps = ['数据库连接设置', '管理员账号设置'];
 
@@ -32,7 +32,7 @@ export default function HorizontalLinearStepper() {
     };
 
   const handleNext = () => {
-    refContainer.current();
+    refContainer.current.abc();
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     if(activeStep === steps.length - 1) {
       // 此时需要调用 api 执行配置的写入
@@ -44,7 +44,9 @@ export default function HorizontalLinearStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const refContainer = React.useRef(null);
+  const refContainer = React.useRef<InstallFormSubmit>({
+    abc: () => {return ""},
+  });
 
   let installForm;
   if (activeStep === 0) {

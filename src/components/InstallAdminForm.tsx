@@ -11,8 +11,9 @@ import { InstallProps, InstallState } from '../interface/install';
 
 export default function InstallDbForm(props: InstallProps) {
   React.useEffect(() => {
-    props.submit.current = () => {
+    props.submit.current.abc = () => {
       console.log('bbbbbbbb');
+      return 'bcd';
     }
   })
   const [showAdminPassword, setShowAdminPassword] = React.useState(false)
