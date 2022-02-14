@@ -16,31 +16,27 @@ const steps = ['数据库连接设置', '管理员账号设置'];
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [installValues, setInstallValues] = React.useState<InstallState>({
-    dbHost: 'fdsafas',
-    dbUser: '',
-    dbPass: '',
-    dbDatabase: '',
-    dbTablenamePrefix: '',
+    dbHost: 'dbhost',
+    dbUser: 'dbuser',
+    dbPass: 'dbpass',
+    dbDatabase: 'dbDatabase',
+    dbTablenamePrefix: 'dbTablenamePrefix',
     adminUser: '',
     adminPass: '',
     adminRepass: '',
   });
 
-  const handleInstallStateChange =
-    (prop: keyof InstallState, value: string) => {
-      setInstallValues({ ...installValues, [prop]: value });
-    };
-
   const handleNext = async () => {
     let formValiteRes = await refContainer.current.validate();
+    console.log(formValiteRes)
     if (formValiteRes) {
+      setInstallValues({ ...installValues, ...formValiteRes });
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       if (activeStep === steps.length - 1) {
         // 此时需要调用 api 执行配置的写入
         console.log('need call api write config file.');
       }
     }
-
   };
 
   const handleBack = () => {
@@ -48,14 +44,14 @@ export default function HorizontalLinearStepper() {
   };
 
   const refContainer = React.useRef<InstallFormSubmit>({
-    validate: async () => { return false },
+    validate: async () => { return null },
   });
 
   let installForm;
   if (activeStep === 0) {
-    installForm = (<InstallDbForm submit={refContainer} updateValue={(prop: keyof InstallState, value: string) => { handleInstallStateChange(prop, value) }} installValues={installValues} />)
+    installForm = (<InstallDbForm submit={refContainer} installValues={installValues} />)
   } else if (activeStep === 1) {
-    installForm = (<InstallAdminForm submit={refContainer} updateValue={(prop: keyof InstallState, value: string) => { handleInstallStateChange(prop, value) }} installValues={installValues} />)
+    installForm = (<InstallAdminForm submit={refContainer} installValues={installValues} />)
   }
 
   return (

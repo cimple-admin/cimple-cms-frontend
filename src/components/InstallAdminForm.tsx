@@ -11,9 +11,9 @@ import { InstallProps, InstallState } from '../interface/install';
 
 export default function InstallDbForm(props: InstallProps) {
   React.useEffect(() => {
-    props.submit.current.validate = () => {
+    props.submit.current.validate = async () => {
       console.log('bbbbbbbb');
-      return 'bcd';
+      return null;
     }
   })
   const [showAdminPassword, setShowAdminPassword] = React.useState(false)
@@ -26,11 +26,6 @@ export default function InstallDbForm(props: InstallProps) {
     event.preventDefault();
   };
 
-  const handleDataChange  =
-  (prop: keyof InstallState) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.updateValue(prop, event.target.value);
-  };
-
   return (
     <Box sx={{ width: '100%', my: 2 }}>
         <FormControl fullWidth sx={{ m: 1 }}>
@@ -38,8 +33,7 @@ export default function InstallDbForm(props: InstallProps) {
           <OutlinedInput
             id="admin-user"
             label="管理员用户名"
-            value={props.installValues.adminUser}
-            onChange={handleDataChange('adminUser')}
+            defaultValue={props.installValues.adminUser}
           />
         </FormControl>
         <FormControl fullWidth sx={{ m: 1 }}>
@@ -48,8 +42,7 @@ export default function InstallDbForm(props: InstallProps) {
             id="admin-pass"
             label="管理员密码"
             type={showAdminPassword ? 'text' : 'password'}
-            value={props.installValues.adminPass}
-            onChange={handleDataChange('adminPass')}
+            defaultValue={props.installValues.adminPass}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -70,8 +63,7 @@ export default function InstallDbForm(props: InstallProps) {
             id="admin-repass"
             label="重复密码"
             type={showAdminPassword ? 'text' : 'password'}
-            value={props.installValues.adminRepass}
-            onChange={handleDataChange('adminRepass')}
+            defaultValue={props.installValues.adminRepass}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
