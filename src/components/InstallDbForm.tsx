@@ -8,14 +8,27 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { InstallProps, InstallState } from '../interface/install';
+import { object, string, number, date, InferType } from 'yup';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, Input, TextField, Typography } from '@mui/material';
+
+// 定义验证逻辑
+const validationSchema = object({
+  dbHost: string().required("请输入数据库地址"),
+})
 
 export default function InstallDbForm(props: InstallProps) {
+  // 对外暴露的方法
   React.useEffect(() => {
-    props.submit.current.abc = () => {
-      console.log('aaaaaaaa');
+    props.submit.current.validate = () => {
+      console.log('aaaaaaaa1');
+      handleSubmit(onSubmit);
+      console.log('aaaaaaaa2');
       return "abc";
     }
   })
+  // 显示隐藏密码的操作
   const [showDbPassword, setShowDbPassword] = React.useState(false)
   const handleClickShowDbPassword = () => {
     setShowDbPassword(!showDbPassword);
@@ -24,22 +37,28 @@ export default function InstallDbForm(props: InstallProps) {
   const handleMouseDownDbPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-
+  // 向父级传递数据的方法 可能加入 validate 后就可以不用这个了，而是采用其他方法
   const handleDataChange  =
   (prop: keyof InstallState) => (event: React.ChangeEvent<HTMLInputElement>) => {
     props.updateValue(prop, event.target.value);
   };
+
+  const { register, control, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+  const onSubmit = (data: any) => {
+    console.log('onSubmit', data);
+    console.log(JSON.stringify(data, null, 2));
+  };
+
   return (
     <Box sx={{ width: '100%', my: 2 }}>
-      <FormControl fullWidth sx={{ m: 1 }}>
-        <InputLabel htmlFor="db-host">数据库地址</InputLabel>
-        <OutlinedInput
-          id="db-host"
-          label="数据库地址"
-          value={props.installValues.dbHost}
-          onChange={handleDataChange('dbHost')}
-        />
-      </FormControl>
+      <TextField sx={{ m: 1 }} id="db-host" fullWidth label="数据库地址" variant="outlined"
+      {...register('dbHost')}
+      error={errors.dbHost ? true : false}/>
+      <Typography sx={{ m: 1 }} variant="inherit" color="textSecondary">
+        {errors.dbHost?.message}
+      </Typography>
       <FormControl fullWidth sx={{ m: 1 }}>
         <InputLabel htmlFor="db-user">数据库用户名</InputLabel>
         <OutlinedInput
@@ -89,6 +108,13 @@ export default function InstallDbForm(props: InstallProps) {
           onChange={handleDataChange('dbTablenamePrefix')}
         />
       </FormControl>
+      <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Register
+            </Button>
     </Box>
   )
 }

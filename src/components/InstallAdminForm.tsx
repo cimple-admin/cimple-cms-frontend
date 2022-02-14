@@ -11,7 +11,7 @@ import { InstallProps, InstallState } from '../interface/install';
 
 export default function InstallDbForm(props: InstallProps) {
   React.useEffect(() => {
-    props.submit.current.abc = () => {
+    props.submit.current.validate = () => {
       console.log('bbbbbbbb');
       return 'bcd';
     }

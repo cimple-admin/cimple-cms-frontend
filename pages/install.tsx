@@ -32,7 +32,7 @@ export default function HorizontalLinearStepper() {
     };
 
   const handleNext = () => {
-    refContainer.current.abc();
+    refContainer.current.validate();
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     if(activeStep === steps.length - 1) {
       // 此时需要调用 api 执行配置的写入
@@ -45,7 +45,7 @@ export default function HorizontalLinearStepper() {
   };
 
   const refContainer = React.useRef<InstallFormSubmit>({
-    abc: () => {return ""},
+    validate: () => {return ""},
   });
 
   let installForm;
