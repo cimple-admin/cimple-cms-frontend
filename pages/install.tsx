@@ -48,7 +48,7 @@ export default function HorizontalLinearStepper() {
   };
 
   const refContainer = React.useRef<InstallFormSubmit>({
-    validate: async () => { return "" },
+    validate: async () => { return false },
   });
 
   let installForm;
