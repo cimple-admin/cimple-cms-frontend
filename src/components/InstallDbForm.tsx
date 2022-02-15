@@ -11,6 +11,7 @@ import { object, string, InferType } from 'yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormHelperText, Input, TextField } from '@mui/material';
+import { PasswordInputCustom } from './PasswordInput';
 
 // 定义验证逻辑
 const validationSchema = object({
@@ -73,24 +74,8 @@ export default function InstallDbForm(props: InstallProps) {
       </Box>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
         <InputLabel htmlFor="db-pass" error={errors.dbPass ? true : false}>数据库密码</InputLabel>
-        <Input
-          id="db-pass"
-          type={showDbPassword ? 'text' : 'password'}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowDbPassword}
-                onMouseDown={handleMouseDownDbPassword}
-                edge="end"
-              >
-                {showDbPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          {...register('dbPass')}
-          error={errors.dbPass ? true : false}
-        />
+        <PasswordInputCustom id="db-pass" {...register('dbPass')}
+          error={errors.dbPass ? true : false} />
         <FormHelperText error={errors.dbPass ? true : false}>
           {errors.dbPass?.message}
         </FormHelperText>

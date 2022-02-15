@@ -11,6 +11,7 @@ import { object, string, InferType, ref } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FormHelperText, Input, TextField } from '@mui/material';
+import { PasswordInputCustom } from './PasswordInput';
 
 // 定义验证逻辑
 const validationSchema = object({
@@ -66,48 +67,16 @@ export default function InstallDbForm(props: InstallProps) {
       </Box>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
         <InputLabel htmlFor="admin-pass" error={errors.adminPass ? true : false}>管理员密码</InputLabel>
-        <Input
-          id="admin-pass"
-          type={showAdminPassword ? 'text' : 'password'}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowAdminPassword}
-                onMouseDown={handleMouseDownAdminPassword}
-                edge="end"
-              >
-                {showAdminPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          {...register('adminPass')}
-          error={errors.adminPass ? true : false}
-        />
+        <PasswordInputCustom id="admin-pass" {...register('adminPass')}
+          error={errors.adminPass ? true : false} />
         <FormHelperText error={errors.adminPass ? true : false}>
           {errors.adminPass?.message}
         </FormHelperText>
       </FormControl>
       <FormControl fullWidth sx={{ m: 1 }} variant="standard">
         <InputLabel htmlFor="admin-repass" error={errors.adminPass ? true : false}>重复密码</InputLabel>
-        <Input
-          id="admin-repass"
-          type={showAdminPassword ? 'text' : 'password'}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowAdminPassword}
-                onMouseDown={handleMouseDownAdminPassword}
-                edge="end"
-              >
-                {showAdminPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          {...register('adminRepass')}
-          error={errors.adminRepass ? true : false}
-        />
+        <PasswordInputCustom id="admin-repass" {...register('adminRepass')}
+          error={errors.adminRepass ? true : false} />
         <FormHelperText error={errors.adminRepass ? true : false}>
           {errors.adminRepass?.message}
         </FormHelperText>
