@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -31,5 +31,14 @@ const Home: NextPage = () => {
     </Container>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // ...
+  // const data = await home()
+  // console.log(data)
+  return {
+    props: {},
+  }
+}
 
 export default Home;

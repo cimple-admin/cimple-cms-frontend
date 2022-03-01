@@ -17,10 +17,12 @@
     "@hookform/resolvers": "^2.8.8",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "axios": "^0.26.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.26.1",
+    "swr": "^1.2.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {

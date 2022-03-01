@@ -6,6 +6,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
+import { home } from '../src/api/home';
+import Router, { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -14,7 +17,22 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-export default function MyApp(props: MyAppProps) {
+function MyApp(props: MyAppProps) {
+  const router = useRouter()
+
+  useEffect(() => {
+    home().then(res => {
+      // 还需要判断来源网址是不是 install
+      if(res.data.code === 10001 && router.pathname !== '/install') {
+        console.log(res.data.code)
+        console.log(router.pathname)
+        // 跳转到安装
+        Router.push('/install')
+      }
+    })
+  })
+
+
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
     <CacheProvider value={emotionCache}>
@@ -29,3 +47,5 @@ export default function MyApp(props: MyAppProps) {
     </CacheProvider>
   );
 }
+
+export default MyApp;
